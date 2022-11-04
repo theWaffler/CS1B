@@ -24,7 +24,6 @@
 *
 ******************************************************************/
 
-
 //original is in replit CS1B_AS03
 using namespace std;
 
@@ -100,6 +99,46 @@ void Display(MovieNode *head)
     delete perPtr; // deletes pointer
 }
 
+/**
+ * This function is to search the list of movies included in the inFile.txt
+ * function does not return anything to main 
+ */
+bool Search(MovieNode *head, ofstream& outFile)
+{
+    string stitle; // IN - the movie title the user inputed
+    bool check; // OUT - checks to see if the movie is found
+    MovieNode *perPtr; // OUT - pointer to search the list
+    perPtr = head;
+
+    cout << "What title are you looking for? /n";
+    getline(cin, stitle);
+    cout << endl << endl;
+    cout << "Searching for the title: " << stitle << endl;
+
+    while (perPtr != NULL)
+    {
+        if (perPtr->title.compare(stitle) == 0)
+        {
+            check = true;
+            //cout << "Found the movie " << perPtr->title << endl;
+        } else
+        {
+            perPtr = perPtr->next;
+        }
+    }
+
+    if (perPtr == NULL)
+    {
+        check = false;
+    }
+
+    perPtr = NULL;
+    delete perPtr;
+
+    return check;
+
+}
+
 int main()
 {
     MovieNode *head;
@@ -108,7 +147,7 @@ int main()
     ofstream outFile; // OUT - output file
     string fileIn; // IN - Name of the input file being used
     string fileOut; // OUT - Name of the output file
-    string sTitle; // IN - used to search based on title
+    bool sTitle; // IN - used to search based on title
     string sGenre; // IN - used to search based on genre
     string sLead; // IN - used to search based on lead
     int sYear; // IN - used to search based on year
@@ -156,6 +195,7 @@ int main()
             cout << "6 - Rating Search (0-9)\n";
             cout << "0 - EXIT\n";
             cout << "Enter command: ";
+
             cin >> command;
 
             switch (command)
@@ -182,8 +222,17 @@ int main()
                      *             - cout << "Found the movie " << title << " !"
                      * return false - if title of the movie is NOT found
                      *              - cout << "Sorry, the movie " << title << " was not found." 
-                     */
-                    
+                     */     
+                    sTitle = Search(head, outFile);
+                    if(sTitle)
+                    {
+                        cout << "Found the movie " << head->title << endl;
+                        outFile << head->title;
+                    }
+                    else
+                    {
+                        cout << "Sorry, the movie " << "''" << head->title << "''" << " was not found.";
+                    }
                     break;
 
                     case GENRE:
@@ -203,7 +252,7 @@ int main()
                      * return true - YEAR of movie is found - output movie to Ofile.txt
                      *             - cout how many movie that match the year searched for
                      *             - cout << "Found " << year << " for the year " << 
-                     * 
+                     *  return false - YEAR of movie NOT found
                      */
                     break;
 
