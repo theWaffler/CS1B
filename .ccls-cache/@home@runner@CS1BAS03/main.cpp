@@ -103,23 +103,18 @@ void Display(MovieNode *head)
  * This function is to search the list of movies included in the inFile.txt
  * function does not return anything to main 
  */
-bool Search(MovieNode *head, ofstream& outFile)
+bool Search(MovieNode *head)
 {
     string stitle; // IN - the movie title the user inputed
-    bool check; // OUT - checks to see if the movie is found
+    bool titleCheck; // OUT - checks to see if the movie is found
     MovieNode *perPtr; // OUT - pointer to search the list
     perPtr = head;
-
-    cout << "What title are you looking for? /n";
-    getline(cin, stitle);
-    cout << endl << endl;
-    cout << "Searching for the title: " << stitle << endl;
 
     while (perPtr != NULL)
     {
         if (perPtr->title.compare(stitle) == 0)
         {
-            check = true;
+            titleCheck = true;
             //cout << "Found the movie " << perPtr->title << endl;
         } else
         {
@@ -129,14 +124,13 @@ bool Search(MovieNode *head, ofstream& outFile)
 
     if (perPtr == NULL)
     {
-        check = false;
+        titleCheck = false;
     }
 
     perPtr = NULL;
     delete perPtr;
 
-    return check;
-
+    return titleCheck;
 }
 
 int main()
@@ -147,7 +141,8 @@ int main()
     ofstream outFile; // OUT - output file
     string fileIn; // IN - Name of the input file being used
     string fileOut; // OUT - Name of the output file
-    bool sTitle; // IN - used to search based on title
+    bool titleCheck; // OUT - used to check if movie title is in the list
+    string stitle; // IN - the movie title the user inputed
     string sGenre; // IN - used to search based on genre
     string sLead; // IN - used to search based on lead
     int sYear; // IN - used to search based on year
@@ -222,9 +217,14 @@ int main()
                      *             - cout << "Found the movie " << title << " !"
                      * return false - if title of the movie is NOT found
                      *              - cout << "Sorry, the movie " << title << " was not found." 
-                     */     
-                    sTitle = Search(head, outFile);
-                    if(sTitle)
+                     */
+                    cout << "What title are you looking for? ";
+                    getline(cin, stitle);
+                    cout << endl << endl;
+                    cout << "Searching for the title: " << stitle << endl;
+                        
+                    Search(head, outFile, stitle);
+                    if(titleCheck)
                     {
                         cout << "Found the movie " << head->title << endl;
                         outFile << head->title;

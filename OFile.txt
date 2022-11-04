@@ -1,0 +1,9 @@
+Movie: Zodiac
+Leading Actor/Actress:Jake Gyllenhaal
+Supporting Actor/Actress: Mark Ruffalo
+Genre Drama
+Sub Genre: Crime
+Release date: 2007
+Rating: 8
+Synopsis: 
+Based on the Robert Graysmith books about the real life notorious Zodiac, a serial killer who terrorized San Francisco with a string of seemingly random murders during the 1960s and 1970s.
